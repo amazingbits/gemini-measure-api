@@ -2,30 +2,30 @@ export type MeasureType = "WATER" | "GAS";
 
 export type Measures = {
   id: string;
-  customer_code: string;
+  customer_code: String;
   measure_datetime?: String | Date | undefined;
-  image_url: string;
+  image_url: String;
   measure_type: MeasureType;
-  measure_value: string;
+  measure_value: String;
 };
 
 export type MeasuresCreateInput = {
-  id?: string | undefined;
-  customer_code: string;
+  id?: String | undefined;
+  customer_code: String;
   measure_datetime?: String | Date | undefined;
-  image_url: string;
+  image_url: String;
   measure_type: MeasureType;
-  measure_value: string;
+  measure_value: String;
 };
 
 export interface MeasureRepository {
   findByIdMonthAndMeasureType(
-    customer_code: string,
-    date: string | Date,
+    customer_code: String,
+    date: String | Date,
     measure_type: MeasureType
   ): Promise<Measures | null>;
-  findById(customer_code: string): Promise<Measures | null>;
+  findById(customer_code: String): Promise<Measures | null>;
   create(data: MeasuresCreateInput): Promise<Measures>;
-  updateMeasureValue(id: string, measure_value: string): Promise<Measures>;
+  updateMeasureValue(id: String, measure_value: String): Promise<Measures>;
   getAll(): Promise<Measures[]>;
 }
