@@ -1,9 +1,12 @@
 import "./libs/module-alias";
+import "express-async-errors";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { Server } from "node:http";
 import { routes } from "./routes";
+import { errorHandler } from "./http/middlewares/errors";
+import NotFoundError from "./http/errors/not-found-error";
 
 export class SetupApplication {
   private server?: Server;
@@ -18,11 +21,17 @@ export class SetupApplication {
 
   private setupRoutes() {
     this.app.use(routes);
+    this.app.all("/*", (_request, _response) => {
+      throw new NotFoundError({
+        message: "route not found",
+      });
+    });
   }
 
   public init(): void {
     this.setupMiddlewares();
     this.setupRoutes();
+    this.app.use(errorHandler);
   }
 
   public startServer(): void {
