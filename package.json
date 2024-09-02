@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dev": "tsx watch ./src/server.ts",
+    "start": "npx prisma migrate dev && npm run build && node build/server.js",
+    "build": "tsup ./src --out-dir build --loader \".html=file\"",
     "test": "vitest run"
   },
   "keywords": [],
