@@ -53,11 +53,11 @@ describe("Measures Repository tests", () => {
       ...firstMeasure,
       measure_datetime: new Date(),
     });
-    const currentMonth = new Date().getMonth() + 1;
+    const currentDate = new Date();
     const foundMeasure =
       await measuresRepositoryMock.findByIdMonthAndMeasureType(
         firstMeasureCode,
-        currentMonth,
+        currentDate,
         "WATER"
       );
     expect(foundMeasure).toEqual(createdMeasure);

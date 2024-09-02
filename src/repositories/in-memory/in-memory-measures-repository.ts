@@ -11,16 +11,17 @@ export class InMemoryMeasuresRepository implements MeasureRepository {
 
   async findByIdMonthAndMeasureType(
     customer_code: string,
-    month: string | number,
+    date: string | Date,
     measure_type: MeasureType
   ): Promise<Measures | null> {
     const measure = this.items.find((measure) => {
-      const date = measure.measure_datetime
+      const measure_date = measure.measure_datetime
         ? new Date(measure.measure_datetime.toString())
         : new Date();
+      const query_date = typeof date === "string" ? new Date(date) : date;
       return (
         measure.customer_code === customer_code &&
-        date.getMonth() + 1 === month &&
+        measure_date.getMonth() === query_date.getMonth() &&
         measure.measure_type === measure_type
       );
     });

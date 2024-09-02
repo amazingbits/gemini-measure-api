@@ -21,7 +21,7 @@ export type MeasuresCreateInput = {
 export interface MeasureRepository {
   findByIdMonthAndMeasureType(
     customer_code: string,
-    month: string | number,
+    date: string | Date,
     measure_type: MeasureType
   ): Promise<Measures | null>;
   findById(customer_code: string): Promise<Measures | null>;
