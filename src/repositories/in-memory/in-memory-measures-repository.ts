@@ -1,5 +1,6 @@
 import { v4 as UUID } from "uuid";
 import {
+  FindMeasureByCustomerIdProps,
   MeasureRepository,
   Measures,
   MeasuresCreateInput,
@@ -7,18 +8,24 @@ import {
 } from "@repositories/measures-repository";
 
 export class InMemoryMeasuresRepository implements MeasureRepository {
-  async findByCustomerId(customer_code: String): Promise<Measures | null> {
-    const measure = this.items.find(
-      (measure) => measure.customer_code === customer_code
-    );
-
-    if (!measure) {
-      return null;
-    }
-
-    return measure;
-  }
   public items: Measures[] = [];
+
+  async findByCustomerId({
+    customer_code,
+    measure_type,
+  }: FindMeasureByCustomerIdProps): Promise<Measures[]> {
+    const measures = this.items.filter((measure) => {
+      if (measure_type) {
+        return (
+          measure.customer_code === customer_code &&
+          measure.measure_type === measure_type
+        );
+      }
+      return measure.customer_code === customer_code;
+    });
+
+    return measures;
+  }
 
   async findByIdMonthAndMeasureType(
     customer_code: string,

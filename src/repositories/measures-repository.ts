@@ -18,6 +18,11 @@ export type MeasuresCreateInput = {
   measure_value: String;
 };
 
+export type FindMeasureByCustomerIdProps = {
+  customer_code: string;
+  measure_type?: MeasureType;
+};
+
 export interface MeasureRepository {
   findByIdMonthAndMeasureType(
     customer_code: String,
@@ -25,7 +30,10 @@ export interface MeasureRepository {
     measure_type: MeasureType
   ): Promise<Measures | null>;
   findById(id: String): Promise<Measures | null>;
-  findByCustomerId(customer_code: String): Promise<Measures | null>;
+  findByCustomerId({
+    customer_code,
+    measure_type,
+  }: FindMeasureByCustomerIdProps): Promise<Measures[]>;
   create(data: MeasuresCreateInput): Promise<Measures>;
   updateMeasureValue(id: String, measure_value: String): Promise<Measures>;
   getAll(): Promise<Measures[]>;

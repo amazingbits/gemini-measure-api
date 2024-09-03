@@ -1,5 +1,6 @@
 import { prisma } from "@libs/prisma";
 import {
+  FindMeasureByCustomerIdProps,
   MeasureRepository,
   Measures,
   MeasuresCreateInput,
@@ -7,18 +8,28 @@ import {
 } from "@repositories/measures-repository";
 
 export class PrismaMeasuresRepository implements MeasureRepository {
-  async findByCustomerId(customer_code: String): Promise<Measures | null> {
-    const measure = await prisma.measures.findMany({
-      where: {
-        customer_code: customer_code.toString(),
-      },
+  async findByCustomerId({
+    customer_code,
+    measure_type,
+  }: FindMeasureByCustomerIdProps): Promise<Measures[]> {
+    let where: FindMeasureByCustomerIdProps = {
+      customer_code: customer_code.toString(),
+    };
+    if (measure_type) {
+      where = {
+        ...where,
+        measure_type: measure_type.toUpperCase() as MeasureType,
+      };
+    }
+    const measures = await prisma.measures.findMany({
+      where,
     });
 
-    if (!measure) {
-      return null;
+    if (!measures) {
+      return [];
     }
 
-    return measure[0];
+    return measures;
   }
   async findByIdMonthAndMeasureType(
     customer_code: string,
