@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CreateMeasureService } from "@services/create-measure-service";
+import { ConfirmMeasureService } from "@services/confirm-measure-service";
 import { PrismaMeasuresRepository } from "@repositories/prisma/prisma-measures-repository";
 
 export const upload = async (request: Request, response: Response) => {
@@ -15,10 +16,15 @@ export const upload = async (request: Request, response: Response) => {
 };
 
 export const confirm = async (request: Request, response: Response) => {
-  return response.json({
-    message: "Confirm measure route",
-    action: "upload measure information",
-  });
+  try {
+    const confirmMeasureService = new ConfirmMeasureService(
+      new PrismaMeasuresRepository()
+    );
+    const res = await confirmMeasureService.handle(request, response);
+    return response.json(res);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const list = async (request: Request, response: Response) => {
