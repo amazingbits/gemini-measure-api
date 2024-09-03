@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CreateMeasureService } from "@services/create-measure-service";
 import { ConfirmMeasureService } from "@services/confirm-measure-service";
+import { ListMeasureService } from "@services/list-measures-service";
 import { PrismaMeasuresRepository } from "@repositories/prisma/prisma-measures-repository";
 
 export const upload = async (request: Request, response: Response) => {
@@ -28,8 +29,13 @@ export const confirm = async (request: Request, response: Response) => {
 };
 
 export const list = async (request: Request, response: Response) => {
-  return response.json({
-    message: "List measures route",
-    action: "get all measures from a customer",
-  });
+  try {
+    const listMeasureService = new ListMeasureService(
+      new PrismaMeasuresRepository()
+    );
+    const res = await listMeasureService.handle(request, response);
+    return response.json(res);
+  } catch (error) {
+    throw error;
+  }
 };
