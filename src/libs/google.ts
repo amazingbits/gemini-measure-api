@@ -5,7 +5,7 @@ import {
 } from "@google/generative-ai";
 import { MeasureType } from "@repositories/measures-repository";
 
-const googleAI = new GoogleGenerativeAI(process.env.API_KEY!);
+const googleAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
 
 const responseSchema: ResponseSchema = {
   description: "complete fields with measure information",
