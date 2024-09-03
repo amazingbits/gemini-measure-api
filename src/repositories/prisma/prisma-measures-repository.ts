@@ -30,10 +30,10 @@ export class PrismaMeasuresRepository implements MeasureRepository {
     return measure[0];
   }
 
-  async findById(customer_code: string): Promise<Measures | null> {
+  async findById(id: string): Promise<Measures | null> {
     const measure = await prisma.measures.findMany({
       where: {
-        customer_code: customer_code,
+        id: id,
       },
     });
 

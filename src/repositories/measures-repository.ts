@@ -24,7 +24,7 @@ export interface MeasureRepository {
     date: String | Date,
     measure_type: MeasureType
   ): Promise<Measures | null>;
-  findById(customer_code: String): Promise<Measures | null>;
+  findById(id: String): Promise<Measures | null>;
   create(data: MeasuresCreateInput): Promise<Measures>;
   updateMeasureValue(id: String, measure_value: String): Promise<Measures>;
   getAll(): Promise<Measures[]>;
