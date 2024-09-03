@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch ./src/server.ts",
-    "start": "npx prisma migrate dev && npm run build && node build/server.js",
+    "start": "npx prisma migrate dev --name initial_migration && npm run build && node build/server.js",
     "build": "tsup ./src --out-dir build --loader \".html=file\"",
     "test": "vitest run"
   },
