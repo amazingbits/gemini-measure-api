@@ -7,6 +7,19 @@ import {
 } from "@repositories/measures-repository";
 
 export class PrismaMeasuresRepository implements MeasureRepository {
+  async findByCustomerId(customer_code: String): Promise<Measures | null> {
+    const measure = await prisma.measures.findMany({
+      where: {
+        customer_code: customer_code.toString(),
+      },
+    });
+
+    if (!measure) {
+      return null;
+    }
+
+    return measure[0];
+  }
   async findByIdMonthAndMeasureType(
     customer_code: string,
     date: string | Date,

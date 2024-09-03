@@ -7,6 +7,17 @@ import {
 } from "@repositories/measures-repository";
 
 export class InMemoryMeasuresRepository implements MeasureRepository {
+  async findByCustomerId(customer_code: String): Promise<Measures | null> {
+    const measure = this.items.find(
+      (measure) => measure.customer_code === customer_code
+    );
+
+    if (!measure) {
+      return null;
+    }
+
+    return measure;
+  }
   public items: Measures[] = [];
 
   async findByIdMonthAndMeasureType(
@@ -33,10 +44,8 @@ export class InMemoryMeasuresRepository implements MeasureRepository {
     return measure;
   }
 
-  async findById(customer_code: string): Promise<Measures | null> {
-    const measure = this.items.find(
-      (measure) => measure.customer_code === customer_code
-    );
+  async findById(id: string): Promise<Measures | null> {
+    const measure = this.items.find((measure) => measure.id === id);
 
     if (!measure) {
       return null;
