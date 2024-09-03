@@ -1,10 +1,17 @@
 import { Request, Response } from "express";
+import { CreateMeasureService } from "@services/create-measure-service";
+import { PrismaMeasuresRepository } from "@repositories/prisma/prisma-measures-repository";
 
 export const upload = async (request: Request, response: Response) => {
-  return response.json({
-    message: "Upload measure route",
-    action: "add new measure",
-  });
+  try {
+    const createMeasureService = new CreateMeasureService(
+      new PrismaMeasuresRepository()
+    );
+    const res = await createMeasureService.handle(request, response);
+    return response.json(res);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const confirm = async (request: Request, response: Response) => {
