@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { v4 as UUID } from "uuid";
-import { MeasureRepository, Measures } from "@repositories/measures-repository";
+import { MeasureRepository } from "@repositories/measures-repository";
 import { validate as validateCreateMeasureParams } from "@requests/create-measure-request";
 import { generateReadingFromLLM } from "@libs/google";
 import { MeasureLLMResponseResource } from "@resources/measure-llm-response-resource";
