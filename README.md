@@ -256,3 +256,15 @@ Ela irá retornar:
     </td>
   </tr>
 </table>
+
+#### Requisitos
+
+- Docker;
+- Uma chave válida para acesso à API do Google Gemini;
+
+#### Como rodar o projeto
+
+- Clone o projeto para a sua máquina;
+- Modifique o nome do arquivo `.env.example` na raíz do projeto para `.env`;
+- Insira o valor da chave da API do Google Gemini na variável de ambiente `GOOGLE_API_KEY`;
+- No terminal, vá ao diretório do projeto e digite o comando `docker-compose up -d` para subir o ambiente no `Docker` e rodar o projeto;
