@@ -1,13 +1,14 @@
-FROM node:18-alpine3.19 AS build
+FROM node:22-alpine3.19
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-EXPOSE 5000
+# Gera o Prisma Client (cria node_modules/.prisma/client)
+RUN npx prisma generate
 
+EXPOSE 5000
 CMD ["npm", "run", "start"]
